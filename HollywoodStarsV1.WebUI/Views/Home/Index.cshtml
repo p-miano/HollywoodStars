@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "Hollywood Stars";
+}
+
+<main>
+    <!-- Header section introducing the application -->
+    <section class="row" aria-labelledby="appTitle">
+        <!-- <h1 id="appTitle">Hollywood Stars</h1> -->
+        <p class="lead">
+            Welcome to Hollywood Stars, a platform that allows you to manage actors and their movie associations. With Hollywood Stars, you can easily add, update, and manage actors and the movies they star in.
+        </p>
+    </section>
+
+    <div class="row">
+        <!-- Manage Actors Section -->
+        <section class="col-md-4" aria-labelledby="manageActorsTitle">
+            <h2 id="manageActorsTitle">Manage Actors</h2>
+            <p>
+                Keep track of the actors in your database, including their full names and associated movies. You can easily add new actors or update and remove existing ones.
+            </p>
+            <p>
+                <a class="btn btn-outline-dark" href="@Url.Action("Index", "ManageActors")">Manage Actors &raquo;</a>
+            </p>
+        </section>
+
+        <!-- Manage Movies Section -->
+        <section class="col-md-4" aria-labelledby="manageMoviesTitle">
+            <h2 id="manageMoviesTitle">Manage Movies</h2>
+            <p>
+                Hollywood Stars allows you to view and manage movies associated with each actor. Add or remove movie associations to keep your data accurate.
+            </p>
+            <p>
+                <a class="btn btn-outline-dark" href="@Url.Action("Index", "ManageMovies")">Manage Movies &raquo;</a>
+            </p>
+        </section>
+        </div>
+</main>

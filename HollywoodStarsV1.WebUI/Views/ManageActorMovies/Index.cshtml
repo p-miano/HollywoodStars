@@ -1,0 +1,79 @@
+﻿@model HollywoodStars.WebUI.Models.ActorMoviesViewModel
+
+@{
+    ViewBag.Title = $"Manage {Model.Actor.FullName} Movies";
+}
+
+@if (Model.NonAssociatedMovies.Any())
+{
+    using (Html.BeginForm("Add", "ManageActorMovies"))
+    {
+        @Html.AntiForgeryToken();
+        <input type="hidden" name="actorId" value="@Model.Actor.ActorId" />
+        <select name="movieId" onchange="selectChange(this)">
+            <option>(Select a movie to add to this actor)</option>
+            @foreach (var movie in Model.NonAssociatedMovies)
+            {
+                <option value="@movie.MovieId">
+                    @movie.Title
+                </option>
+            }
+        </select>
+        <button id="btnAdd" type="submit" class="btn btn-primary" disabled>Click here to Add</button>
+    }
+}
+else
+{
+    if (Model.AssociatedMovies.Any())
+    {
+        <p>This actor is associated with all movies from our catalog.</p>
+    }
+}
+
+@if (Model.AssociatedMovies.Any())
+{
+    <table>
+        <thead>
+            <tr>
+                <th>Actor of:</th>
+                <th>
+
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var movie in Model.AssociatedMovies)
+            {
+                <tr>
+                    <td>
+                        <input type="text" value="@movie.Title" style="width:350px;" class="form-control classname" readonly />
+                    </td>
+                    <td>
+                        @using (Html.BeginForm("Remove", "ManageActorMovies"))
+                        {
+                            @Html.AntiForgeryToken();
+                            <input type="hidden" name="actorId" value="@Model.Actor.ActorId" />
+                            <input type="hidden" name="movieId" value="@movie.MovieId" />
+                            <input type="submit" value="Remove" class="btn btn-danger" onclick="return removeConfirmation();" />
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>This actor is not associated with any Movie.</p>
+}
+
+@section Scripts {
+    <script>
+        function selectChange(select) {
+            if (select.selectedIndex == 0)
+                document.getElementById("btnAdd").disabled = "disabled";
+            else
+                document.getElementById("btnAdd").disabled = "";
+        }
+    </script>
+}

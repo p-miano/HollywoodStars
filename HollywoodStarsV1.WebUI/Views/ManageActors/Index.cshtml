@@ -1,0 +1,47 @@
+﻿@model IEnumerable<HollywoodStars.Models.Actor>
+
+@{
+    ViewBag.Title = "Manage Actors";
+}
+
+<p>
+    @Html.ActionLink("Click here to Add", "AddOrUpdate", null, new { @class = "btn btn-primary" })
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ActorId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FullName)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.ActorId
+            </td>
+
+            <td>
+                @item.FullName
+            </td>
+
+            <td>
+                @Html.ActionLink("Update", "AddOrUpdate", new { id = item.ActorId }, new { @class = "btn btn-outline-primary" })
+                @Html.ActionLink("Manage Actor Movies", "Index", "ManageActorMovies", new { id = item.ActorId }, new { @class = "btn btn-outline-primary" })
+
+                @using (Html.BeginForm("Remove", "ManageActors", FormMethod.Post, new { @class = "d-inline" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.Hidden("ActorId", item.ActorId)
+                    <input type="submit" value="Remove" class="btn btn-danger" onclick="return removeConfirmation();" />
+                }
+            </td>
+        </tr>
+    }
+
+</table>

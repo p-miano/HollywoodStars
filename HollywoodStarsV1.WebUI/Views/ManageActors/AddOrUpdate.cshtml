@@ -1,0 +1,38 @@
+﻿@model HollywoodStars.Models.Actor
+
+@{
+    if (string.IsNullOrEmpty((string)ViewContext.RouteData.Values["id"]))
+    {
+        ViewBag.Title = "Add Actor";
+    }
+    else
+    {
+        ViewBag.Title = "Update Actor";
+    }
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <div class="col-md-6">
+            @Html.LabelFor(model => model.FullName, htmlAttributes: new { @class = "control-label" })
+            @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+            @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
+
+            <a href="/ManageActors/" class="btn btn-outline-secondary vspace">Back</a>
+
+            @if (Model == null || Model.ActorId == 0)
+            {
+                <input type="submit" value="Add" class="btn btn-primary vspace" />
+            }
+            else
+            {
+                <input type="hidden" name="ActorId" value="@Model.ActorId" />
+                <input type="submit" value="Update" class="btn btn-primary vspace" />
+            }
+        </div>
+    </div>
+}
+
